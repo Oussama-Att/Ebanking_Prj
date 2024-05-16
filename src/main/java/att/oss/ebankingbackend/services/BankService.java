@@ -1,4 +1,4 @@
-package att.oss.ebankingbackend.web;
+package att.oss.ebankingbackend.services;
 
 import att.oss.ebankingbackend.entities.BankAccount;
 import att.oss.ebankingbackend.entities.CurrentAccount;
