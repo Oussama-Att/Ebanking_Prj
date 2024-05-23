@@ -1,6 +1,9 @@
 package att.oss.ebankingbackend;
 
+import att.oss.ebankingbackend.Dtos.BankAccountDTO;
+import att.oss.ebankingbackend.Dtos.CurrentBankAccountDTO;
 import att.oss.ebankingbackend.Dtos.CustomerDTO;
+import att.oss.ebankingbackend.Dtos.SavingBankAccountDTO;
 import att.oss.ebankingbackend.entities.*;
 import att.oss.ebankingbackend.exceptions.BalanceNotSufficientException;
 import att.oss.ebankingbackend.exceptions.BankAccountNotFoundException;
@@ -41,16 +44,31 @@ public class EbankingBackEndApplication {
                 try {
                     bankAccountService.saveCurrentAccount(Math.random() * 9000, 9000, customer.getId());
                     bankAccountService.saveSavingAccount(Math.random() * 12000, 5.5, customer.getId());
-                    List<BankAccount> bankAccounts = bankAccountService.bankAccountList();
-                    for (BankAccount account : bankAccounts) {
-                        for(int i = 0; i<10; i++){
-                            bankAccountService.credit(account.getId(), 10000 + Math.random() * 120000, "Credit");
-                            bankAccountService.debit(account.getId(), 1000 + Math.random() * 9000, "Debit");
-                        }
-                    }
-                } catch (CustomerNotFoundException | BalanceNotSufficientException e) {e.printStackTrace();}
-                catch (BankAccountNotFoundException e) {e.printStackTrace();};
+                } catch (CustomerNotFoundException e) {
+                    e.printStackTrace();
+                }
             });
+            List<BankAccountDTO> bankAccounts = bankAccountService.bankAccountList();
+            for (BankAccountDTO bankAccount : bankAccounts) {
+                for(int i = 0; i<10; i++){
+                    String accountId;
+                    if(bankAccount instanceof SavingBankAccountDTO){
+                        accountId = ((SavingBankAccountDTO) bankAccount).getId();
+                    }else {
+                        accountId = ((CurrentBankAccountDTO) bankAccount).getId();
+                    }
+                    try {
+                        bankAccountService.credit(accountId, 10000 + Math.random() * 120000, "Credit");
+                    } catch (BalanceNotSufficientException e) {
+                        throw new RuntimeException(e);
+                    }
+                    try {
+                        bankAccountService.debit(accountId, 1000 + Math.random() * 9000, "Debit");
+                    } catch (BalanceNotSufficientException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
         };
     }
 
