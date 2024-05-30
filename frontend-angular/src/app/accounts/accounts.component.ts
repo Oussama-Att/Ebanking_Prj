@@ -1,12 +1,17 @@
+<<<<<<< HEAD
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {AccountsService} from "../services/accounts.service";
 import {catchError, Observable, throwError} from "rxjs";
 import {AccountDetails} from "../model/account.model";
+=======
+import { Component } from '@angular/core';
+>>>>>>> 892645581ff12c43f5590c01145f00bc9d90886b
 
 @Component({
   selector: 'app-accounts',
   templateUrl: './accounts.component.html',
+<<<<<<< HEAD
   styleUrls: ['./accounts.component.css'] // Fixed typo here (styleUrl -> styleUrls)
 })
 export class AccountsComponent implements OnInit{
@@ -85,4 +90,10 @@ export class AccountsComponent implements OnInit{
       });
     }
   }
+=======
+  styleUrl: './accounts.component.css'
+})
+export class AccountsComponent {
+
+>>>>>>> 892645581ff12c43f5590c01145f00bc9d90886b
 }

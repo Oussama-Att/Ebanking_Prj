@@ -23,7 +23,10 @@ export class NewCustomerComponent implements OnInit{
     });
   }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 892645581ff12c43f5590c01145f00bc9d90886b
   handleSaveCustomer() {
     let customer:Customer = this.newCustomerFormGroup.value;
     this.customerService.saveCustomers(customer).subscribe({
