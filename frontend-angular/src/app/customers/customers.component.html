@@ -25,19 +25,16 @@
             <td>{{ c.id }}</td>
             <td>{{ c.name }}</td>
             <td>{{ c.email }}</td>
-            <td>
+            <td *ngIf="authService.roles.includes('ADMIN')">
               <button (click)="handleDeleteCustomer(c)" class="btn btn-danger">
                 <i class="bi bi-trash"></i>
               </button>
             </td>
-<<<<<<< HEAD
             <td>
               <button (click)="handleCustomerAccount(c)" class="btn btn-success">
                   Accounts
               </button>
             </td>
-=======
->>>>>>> 892645581ff12c43f5590c01145f00bc9d90886b
           </tr>
           </tbody>
         </table>

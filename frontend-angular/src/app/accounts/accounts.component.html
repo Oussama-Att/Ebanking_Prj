@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <div class="container mt-2">
   <div class="row">
     <div class="col col-md-6">
@@ -62,7 +61,7 @@
     <div class="col col-md-6">
       <div class="card" *ngIf="accountObservable | async">
         <div class="card-header">Account Operations</div>
-        <div class="card-body">
+        <div class="card-body" *ngIf="authService.roles.includes('ADMIN')">
           <form [formGroup]="operationFormGroup" (ngSubmit)="handleAccountOperation()">
             <div class="form-check form-check-inline">
               <input class="form-check-input" value="DEBIT" type="radio" formControlName="operationType">
@@ -97,6 +96,3 @@
     </div>
   </div>
 </div>
-=======
-<p>accounts works!</p>
->>>>>>> 892645581ff12c43f5590c01145f00bc9d90886b

@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { CustomerService } from "../services/customer.service";
-import {catchError, map, Observable, throwError} from "rxjs";
+import { catchError, map, Observable, throwError } from "rxjs";
 import { Customer } from "../model/customer.model";
 import { FormBuilder, FormGroup } from "@angular/forms";
-<<<<<<< HEAD
-import {Router} from "@angular/router";
-=======
->>>>>>> 892645581ff12c43f5590c01145f00bc9d90886b
+import { Router } from "@angular/router";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-customers',
@@ -20,11 +18,7 @@ export class CustomersComponent implements OnInit {
   errorMessage!: string;
   searchFormGroup!: FormGroup;
 
-<<<<<<< HEAD
-  constructor(private customerService: CustomerService, private fb: FormBuilder,private router : Router) {}
-=======
-  constructor(private customerService: CustomerService, private fb: FormBuilder) {}
->>>>>>> 892645581ff12c43f5590c01145f00bc9d90886b
+  constructor(public authService : AuthService ,private customerService: CustomerService, private fb: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     this.searchFormGroup = this.fb.group({
@@ -51,27 +45,24 @@ export class CustomersComponent implements OnInit {
 
   handleDeleteCustomer(c: Customer) {
     let conf = confirm("Are you sure?.")
-    if(!conf) return;
+    if (!conf) return;
     this.customerService.deleteCustomers(c.id).subscribe({
-      next : (resp) => {
+      next: (resp) => {
         this.customers = this.customers.pipe(
-          map(data =>{
+          map(data => {
             let index = data.indexOf(c);
-            data.slice(index,1)
+            data.slice(index, 1);
             return data;
           })
         )
-       },
-      error : err => {
+      },
+      error: err => {
         console.log(err);
       }
     });
   }
-<<<<<<< HEAD
 
   handleCustomerAccount(customer: Customer) {
-    this.router.navigateByUrl("/customer-accounts/"+customer.id,{state : customer})
+    this.router.navigateByUrl("/customer-accounts/" + customer.id, { state: customer });
   }
-=======
->>>>>>> 892645581ff12c43f5590c01145f00bc9d90886b
 }

@@ -1,46 +1,43 @@
-<<<<<<< HEAD
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {AccountsService} from "../services/accounts.service";
-import {catchError, Observable, throwError} from "rxjs";
-import {AccountDetails} from "../model/account.model";
-=======
-import { Component } from '@angular/core';
->>>>>>> 892645581ff12c43f5590c01145f00bc9d90886b
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { AccountsService } from "../services/accounts.service";
+import { catchError, Observable, throwError } from "rxjs";
+import { AccountDetails } from "../model/account.model";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-accounts',
   templateUrl: './accounts.component.html',
-<<<<<<< HEAD
-  styleUrls: ['./accounts.component.css'] // Fixed typo here (styleUrl -> styleUrls)
+  styleUrls: ['./accounts.component.css'] // Correct property name
 })
-export class AccountsComponent implements OnInit{
-  accountFormGroup! : FormGroup;
-  currentPage : number = 0;
-  pageSize : number = 5;
-  accountObservable! : Observable<AccountDetails>;
-  operationFormGroup! : FormGroup;
-  errorMessage! : string;
+export class AccountsComponent implements OnInit {
+  accountFormGroup!: FormGroup;
+  currentPage: number = 0;
+  pageSize: number = 5;
+  accountObservable!: Observable<AccountDetails>;
+  operationFormGroup!: FormGroup;
+  errorMessage!: string;
 
-  constructor(private fb : FormBuilder, private accountService: AccountsService) {}
+  constructor(private fb: FormBuilder, private accountService: AccountsService , public authService:AuthService) {}
 
   ngOnInit(): void {
     this.accountFormGroup = this.fb.group({
-      accountId : this.fb.control(''),
+      accountId: this.fb.control(''),
     });
 
-    this.operationFormGroup=this.fb.group({
-      operationType : this.fb.control(null),
-      amount : this.fb.control(0),
-      description : this.fb.control(null),
-      accountDestination : this.fb.control(null)
-    })}
+    this.operationFormGroup = this.fb.group({
+      operationType: this.fb.control(null),
+      amount: this.fb.control(0),
+      description: this.fb.control(null),
+      accountDestination: this.fb.control(null)
+    });
+  }
 
   handleSearchAccount() {
     const accountId: string = this.accountFormGroup.value.accountId;
     this.accountObservable = this.accountService.getAccount(accountId, this.currentPage, this.pageSize).pipe(
       catchError(err => {
-        this.errorMessage=err.error.message();
+        this.errorMessage = err.error.message;
         return throwError(err);
       })
     );
@@ -52,11 +49,11 @@ export class AccountsComponent implements OnInit{
   }
 
   handleAccountOperation() {
-    let accountId :string = this.accountFormGroup.value.accountId;
-    let operationType=this.operationFormGroup.value.operationType;
-    let amount :number =this.operationFormGroup.value.amount;
-    let desc :string =this.operationFormGroup.value.description;
-    let accountDestination :string =this.operationFormGroup.value.accountDestination;
+    let accountId: string = this.accountFormGroup.value.accountId;
+    let operationType = this.operationFormGroup.value.operationType;
+    let amount: number = this.operationFormGroup.value.amount;
+    let desc: string = this.operationFormGroup.value.description;
+    let accountDestination: string = this.operationFormGroup.value.accountDestination;
 
     if (operationType === 'DEBIT') {
       this.accountService.debit(accountId, amount, desc).subscribe({
@@ -90,10 +87,4 @@ export class AccountsComponent implements OnInit{
       });
     }
   }
-=======
-  styleUrl: './accounts.component.css'
-})
-export class AccountsComponent {
-
->>>>>>> 892645581ff12c43f5590c01145f00bc9d90886b
 }

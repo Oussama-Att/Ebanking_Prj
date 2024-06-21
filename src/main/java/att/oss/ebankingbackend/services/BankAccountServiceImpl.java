@@ -209,11 +209,7 @@ public class BankAccountServiceImpl implements BankAccountService{
     public AccountHistoryDTO getAccountHistory(String accountId, int page, int size) throws BankAccountNotFoundException {
         BankAccount bankAccount = bankAccountRepository.findById(accountId).orElse(null);
         if(bankAccount == null) throw new BankAccountNotFoundException("Account not found");
-<<<<<<< HEAD
         Page<AccountOperation> accountOperations = accountOperationRepository.findByBankAccountIdOrderByOperationDateDesc(accountId, PageRequest .of(page,size));
-=======
-        Page<AccountOperation> accountOperations = accountOperationRepository.findByBankAccountId(accountId, PageRequest .of(page,size));
->>>>>>> 892645581ff12c43f5590c01145f00bc9d90886b
         AccountHistoryDTO accountHistoryDTO = new AccountHistoryDTO();
         List<AccountOperationDTO> accountHistoryOperationDTOS = accountOperations.getContent().stream().map(op -> dtoMapper.fromAccountOperation(op)).collect(Collectors.toList());
         accountHistoryDTO.setAccountOperationDTOList(accountHistoryOperationDTOS);

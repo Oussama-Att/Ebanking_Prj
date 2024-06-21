@@ -6,13 +6,14 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CustomersComponent } from './customers/customers.component';
 import { AccountsComponent } from './accounts/accounts.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import { NewCustomerComponent } from './new-customer/new-customer.component';
-<<<<<<< HEAD
 import { CustomerAccountsComponent } from './customer-accounts/customer-accounts.component';
-=======
->>>>>>> 892645581ff12c43f5590c01145f00bc9d90886b
+import { LoginComponent } from './login/login.component';
+import { AdminTemplateComponent } from './admin-template/admin-template.component';
+import {AppHttpInterceptor} from "./interceptors/app-http.interceptor";
+import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
 
 @NgModule({
   declarations: [
@@ -20,12 +21,12 @@ import { CustomerAccountsComponent } from './customer-accounts/customer-accounts
     NavbarComponent,
     CustomersComponent,
     AccountsComponent,
-<<<<<<< HEAD
     NewCustomerComponent,
-    CustomerAccountsComponent
-=======
-    NewCustomerComponent
->>>>>>> 892645581ff12c43f5590c01145f00bc9d90886b
+    CustomerAccountsComponent,
+    NewCustomerComponent,
+    LoginComponent,
+    AdminTemplateComponent,
+    NotAuthorizedComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +34,9 @@ import { CustomerAccountsComponent } from './customer-accounts/customer-accounts
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    {provide : HTTP_INTERCEPTORS, useClass : AppHttpInterceptor,multi : true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
